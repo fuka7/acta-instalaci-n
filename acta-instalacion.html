@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Instalación - MINSAL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ── Tipo equipo ─────────────────────────────────────────────── */
+        .tipo-equipo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+            gap: 8px;
+        }
+        .tipo-radio {
+            display: flex; align-items: center; gap: 8px;
+            padding: 9px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: white;
+            cursor: pointer;
+            font-size: 14px; font-weight: 500;
+            transition: all .15s;
+        }
+        .tipo-radio:hover { border-color: #cfe6ff; background: #fafcff; }
+        .tipo-radio input[type="radio"] { accent-color: var(--blue-mid); width: 15px; height: 15px; cursor: pointer; }
+        .tipo-radio:has(input:checked) { border-color: var(--blue-mid); background: var(--blue-light); color: var(--blue); font-weight: 600; }
+
+        /* ── Tabla checklist ─────────────────────────────────────────── */
+        .val-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        .val-table thead tr { background: var(--blue-light); }
+        .val-table thead th {
+            padding: 8px 10px; text-align: left;
+            font-size: 13px; font-weight: 700;
+            color: var(--blue); text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+        .val-table thead th.th-sino { text-align: center; width: 76px; }
+        .val-table tbody tr { border-bottom: 1px solid #f0f4f8; }
+        .val-table tbody tr:hover { background: #fafcff; }
+        .val-table tbody td { padding: 7px 10px; font-size: 14px; vertical-align: middle; }
+        .val-table tbody td.td-sino { text-align: center; }
+
+        /* ── Radios Sí / No ──────────────────────────────────────────── */
+        .sino-radio {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 58px; height: 38px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px; font-weight: 700;
+            transition: all .14s;
+            gap: 4px;
+        }
+        .sino-radio input[type="radio"] { display: none; }
+        .sino-radio.si-label { color: #1a9e5f; }
+        .sino-radio.no-label { color: #d93025; }
+        .sino-radio:has(input:checked).si-label { background: #e6f7ef; border-color: #1a9e5f; }
+        .sino-radio:has(input:checked).no-label { background: #fde8e8; border-color: #d93025; }
+
+        /* ── Input IP ────────────────────────────────────────────────── */
+        .ip-input {
+            font-size: 13px; font-family: monospace;
+            padding: 6px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--gray-50);
+            flex: 1;
+            min-width: 0;
+        }
+        .ip-input:focus {
+            outline: none; border-color: var(--blue-mid);
+            box-shadow: 0 0 0 2px rgba(43,138,239,.12);
+        }
+
+        /* ── Botón marcar todo Sí ────────────────────────────────────── */
+        .marcar-si-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 16px;
+            border: 1.5px solid #1a9e5f;
+            border-radius: 8px;
+            background: #e6f7ef; color: #1a9e5f;
+            font-size: 13px; font-weight: 600;
+            cursor: pointer; font-family: inherit;
+            transition: all .14s;
+            margin-bottom: 8px;
+        }
+        .marcar-si-btn:hover { background: #1a9e5f; color: white; }
+        .marcar-si-btn--active {
+            background: #1a9e5f; color: white; border-color: #148a50;
+        }
+        .marcar-si-btn--active:hover { background: #148a50; }
+
+        /* ── Firmantes ───────────────────────────────────────────────── */
+        .firmantes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin-top: 4px;
+        }
+        .firmante-block {
+            border: 1px solid #dde8f5;
+            border-radius: var(--radius);
+            padding: 16px;
+            background: white;
+        }
+        .firmante-block h3 {
+            font-size: 13px; font-weight: 700;
+            color: var(--blue); text-transform: uppercase;
+            letter-spacing: .5px; margin: 0 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--blue-light);
+        }
+        .firmante-block .firma-container {
+            height: 160px;
+            margin-top: 10px;
+        }
+        .firmante-block .campos-firmante {
+            max-width: 520px;
+        }
+        .firmante-block .firma-container canvas {
+            width: 100%; height: 100%;
+            display: block; touch-action: none; cursor: crosshair;
+        }
+        .borrar-firma-btn {
+            margin-top: 8px;
+            display: none;
+            align-items: center; gap: 6px;
+            padding: 7px 16px;
+            font-size: 13px; font-weight: 600;
+            color: #d93025; background: #fde8e8;
+            border: 1.5px solid #d93025;
+            border-radius: 8px; cursor: pointer;
+            transition: background .14s, color .14s;
+        }
+        .borrar-firma-btn:hover { background: #d93025; color: #fff; }
+
+        @media (max-width: 700px) {
+            .firmantes-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="app-header">
+    <div class="header-inner">
+        <div class="header-logo">
+            <img src="img/2048px-HP_logo_2012.svg.png" alt="HP" style="width:42px;height:42px;object-fit:contain;display:block;border-radius:50%;">
+        </div>
+        <div class="header-title">
+            <h1>Registro de Instalación</h1>
+            <p>MINISTERIO DE SALUD — Mesa de Ayuda HP / MINSAL</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+<form id="instalacionForm">
+
+<!-- ───────────────────────────────────────────────────────────────
+     1. DATOS GENERALES
+─────────────────────────────────────────────────────────────────── -->
+<section class="card">
+    <h2><span class="section-icon">📋</span> Datos Generales</h2>
+
+    <h3>Ubicación</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+        <select id="organismo"><option value="">Organismo…</option></select>
+        <input type="text" id="establecimiento" placeholder="Establecimiento">
+        <input type="text" id="direccion" placeholder="Dirección completa">
+        <select id="region"><option value="">Seleccione Región</option></select>
+        <select id="ciudad"><option value="">Seleccione Comuna</option></select>
+        <div style="position:relative;">
+            <input type="text" id="unidad" placeholder="Unidad o Departamento (opcional)">
+        </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:12px;">
+        <div>
+            <h3 style="margin-top:0;margin-bottom:8px;">Fecha de instalación</h3>
+            <input type="date" id="fecha">
+        </div>
+        <div>
+            <h3 style="margin-top:0;margin-bottom:8px;">Serie del Equipo</h3>
+            <input type="text" id="serie" placeholder="N° de Serie">
+        </div>
+    </div>
+
+    <h3>Responsable del equipo</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+        <input type="text" id="nombre" placeholder="Nombre completo">
+        <input type="text" id="cargo" placeholder="Cargo Usuario">
+        <div>
+            <input type="text" id="rut" placeholder="RUT (ej: 12.345.678-9)" maxlength="12">
+            <small id="errorRut" class="error-message"></small>
+        </div>
+        <div>
+            <input type="email" id="email" placeholder="Correo electrónico">
+            <small id="errorEmail" class="error-message"></small>
+        </div>
+        <div>
+            <input type="text" id="telefono" placeholder="Teléfono">
+            <small id="errorTelefono" class="error-message"></small>
+        </div>
+    </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────
+     2. CHECKLIST INSTALACIÓN
+─────────────────────────────────────────────────────────────────── -->
+<section class="card">
+    <h2><span class="section-icon">🔧</span> Checklist de Instalación</h2>
+    <p style="font-size:14px;color:var(--gray-600);margin-bottom:10px;">
+        Marque Sí o No para cada ítem. La IP del equipo se ingresa directamente en el campo correspondiente.
+    </p>
+    <button type="button" class="marcar-si-btn" onclick="marcarTodoSi('tbodyInstalacion', this)">✓ Marcar todo como Sí</button>
+    <div style="overflow-x:auto;">
+        <table class="val-table">
+            <thead>
+                <tr>
+                    <th>Ítem de instalación</th>
+                    <th class="th-sino">Sí</th>
+                    <th class="th-sino">No</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyInstalacion"></tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────
+     3. CHECKLIST USUARIO
+─────────────────────────────────────────────────────────────────── -->
+<section class="card">
+    <h2><span class="section-icon">👤</span> Checklist de Usuario</h2>
+    <button type="button" class="marcar-si-btn" onclick="marcarTodoSi('tbodyUsuario', this)">✓ Marcar todo como Sí</button>
+    <div style="overflow-x:auto;">
+        <table class="val-table">
+            <thead>
+                <tr>
+                    <th>Ítem de usuario</th>
+                    <th class="th-sino">Sí</th>
+                    <th class="th-sino">No</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyUsuario"></tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────
+     4. CHECKLIST VALIDACIÓN
+─────────────────────────────────────────────────────────────────── -->
+<section class="card">
+    <h2><span class="section-icon">✅</span> Checklist de Validación</h2>
+    <button type="button" class="marcar-si-btn" onclick="marcarTodoSi('tbodyValidacion', this)">✓ Marcar todo como Sí</button>
+    <div style="overflow-x:auto;">
+        <table class="val-table">
+            <thead>
+                <tr>
+                    <th>Ítem de validación</th>
+                    <th class="th-sino">Sí</th>
+                    <th class="th-sino">No</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyValidacion"></tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────
+     5. OBSERVACIONES
+─────────────────────────────────────────────────────────────────── -->
+<section class="card">
+    <h2><span class="section-icon">📝</span> Observaciones</h2>
+    <textarea id="observaciones" rows="3" placeholder="Observaciones adicionales sobre la instalación (opcional)…"></textarea>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────
+     6. ACEPTACIÓN CONFORME / FIRMAS
+─────────────────────────────────────────────────────────────────── -->
+<section class="card">
+    <h2><span class="section-icon">✍</span> Aceptación Conforme</h2>
+
+    <div class="firmantes-grid">
+
+        <!-- TÉCNICO HP -->
+        <div class="firmante-block">
+            <h3>Técnico Instalador HP</h3>
+            <div class="campos-firmante" style="display:flex;flex-direction:column;gap:7px;">
+                <input type="text" id="nombreTecnico" placeholder="Nombre completo">
+                <div>
+                    <input type="text" id="rutTecnico" placeholder="RUT (ej: 12.345.678-9)" maxlength="12">
+                    <small id="errorRutTecnico" class="error-message"></small>
+                </div>
+            </div>
+            <div class="firma-container" style="margin-top:10px;">
+                <canvas id="canvasTecnico"></canvas>
+                <div class="firma-placeholder" id="phTecnico">
+                    <span class="ph-icon">✏️</span> Firme aquí
+                </div>
+            </div>
+            <input type="hidden" id="firmaTecnico">
+            <button type="button" id="btnBorrarTecnico" class="borrar-firma-btn" style="display:none;">🗑 Borrar firma</button>
+        </div>
+
+        <!-- FIRMANTE DEL DOCUMENTO -->
+        <div class="firmante-block">
+            <h3>Firmante del Documento</h3>
+            <div class="campos-firmante" style="display:flex;flex-direction:column;gap:7px;">
+                <input type="text" id="nombreFirmante" placeholder="Nombre completo">
+                <div>
+                    <input type="text" id="rutFirmante" placeholder="RUT (ej: 12.345.678-9)" maxlength="12">
+                    <small id="errorRutFirmante" class="error-message"></small>
+                </div>
+            </div>
+            <div class="firma-container" style="margin-top:10px;">
+                <canvas id="canvasFirmante"></canvas>
+                <div class="firma-placeholder" id="phFirmante">
+                    <span class="ph-icon">✏️</span> Firme aquí
+                </div>
+            </div>
+            <input type="hidden" id="firmaFirmante">
+            <button type="button" id="btnBorrarFirmante" class="borrar-firma-btn" style="display:none;">🗑 Borrar firma</button>
+        </div>
+
+    </div><!-- /firmantes-grid -->
+
+    <div class="acciones-finales" style="margin-top:24px;">
+        <button type="button" onclick="generarPDF()" class="submit-btn">
+            📄 Generar PDF
+        </button>
+        <button type="button" id="btnNuevaActa" class="nueva-acta-btn" style="display:none;">
+            🔄 Crear otro registro
+        </button>
+    </div>
+</section>
+
+</form>
+</div><!-- /container -->
+
+<!-- Overlay generando PDF -->
+<div id="pdfOverlay" style="display:none;position:fixed;inset:0;background:rgba(15,30,55,0.55);z-index:99999;align-items:center;justify-content:center;">
+    <div style="background:white;border-radius:14px;padding:36px 48px;display:flex;flex-direction:column;align-items:center;gap:18px;box-shadow:0 8px 40px rgba(0,0,0,0.22);">
+        <div style="width:48px;height:48px;border:5px solid #e0eaf8;border-top-color:#2b8aef;border-radius:50%;animation:spinPdf .8s linear infinite;"></div>
+        <p style="margin:0;font-size:16px;font-weight:600;color:#1e2d3d;font-family:inherit;">Generando PDF…</p>
+        <p style="margin:0;font-size:13px;color:#6b7a8d;font-family:inherit;">Por favor espere un momento</p>
+    </div>
+</div>
+<style>
+@keyframes spinPdf { to { transform: rotate(360deg); } }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="regiones-comunas.js"></script>
+<script src="organismos.js"></script>
+<script src="validaciones.js"></script>
+<script src="acta-instalacion-template.js"></script>
+<script src="acta-instalacion-script.js"></script>
+</body>
+</html>
