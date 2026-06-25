@@ -367,15 +367,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const html     = generarContenidoActaInstalacion(data);
         const filename = 'Registro-Instalacion.pdf';
 
+        // 1. Mostrar overlay PRIMERO y esperar que el navegador lo pinte
         const overlay = document.getElementById('pdfOverlay');
         overlay.style.display = 'flex';
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
+        // 2. Ahora crear el div temporal y renderizar
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
         tempDiv.style.cssText = 'width:794px;background:#fff;padding:20px;position:fixed;top:10px;left:-10000px;z-index:9999;opacity:1;visibility:visible;';
         document.body.appendChild(tempDiv);
 
-        await new Promise(resolve => setTimeout(resolve, 1200));
+        // 3. Pequeña espera para que el DOM estabilice antes de capturar
+        await new Promise(resolve => setTimeout(resolve, 800));
 
         try {
             const canvas = await html2canvas(tempDiv, {
