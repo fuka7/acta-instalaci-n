@@ -360,7 +360,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             nombreFirmante: document.getElementById('nombreFirmante').value,
             rutFirmante:    document.getElementById('rutFirmante').value,
-            causaFirma:     document.getElementById('causaFirma').value,
             firmaFirmante:  padFirmante.capture(),
         };
 

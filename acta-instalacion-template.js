@@ -41,10 +41,7 @@ function generarContenidoActaInstalacion(data) {
         </tr>`;
     }).join('');
 
-    const firmaBlock = (titulo, nombre, rut, img, causa) => {
-        const causaRow = causa
-            ? `<tr><td colspan="2" style="padding:4px 8px;background:#f5f8fa;font-size:9.5px;color:#666;border:1px solid #cccccc;">Firma debido a: ${v(causa)}</td></tr>`
-            : '';
+    const firmaBlock = (titulo, nombre, rut, img) => {
         const firmaImg = img
             ? `<img src="${img}" style="max-width:180px;max-height:66px;display:block;margin:0 auto 4px;">`
             : '<div style="height:56px;"></div>';
@@ -53,7 +50,6 @@ function generarContenidoActaInstalacion(data) {
         <table style="${tbl}">
             <tr><td style="${lbl}">Nombre</td><td style="${val}">${v(nombre)}</td></tr>
             <tr><td style="${lbl}">Rut</td><td style="${val}">${v(rut)}</td></tr>
-            ${causaRow}
         </table>
         <div style="padding:6px 8px;border-top:1px solid #cccccc;text-align:center;min-height:72px;">
             ${firmaImg}
@@ -167,9 +163,9 @@ ${obsBlock}
 <table style="${tbl}margin-bottom:7px;">
   <tr><th colspan="3" style="${thS}">Aceptación Conforme</th></tr>
   <tr>
-    ${firmaBlock('Técnico Instalador HP', data.nombreTecnico, data.rutTecnico, data.firmaTecnico, '')}
+    ${firmaBlock('Técnico Instalador HP', data.nombreTecnico, data.rutTecnico, data.firmaTecnico)}
     <td style="width:8px;padding:0;border:none;"></td>
-    ${firmaBlock('Firmante del Documento', data.nombreFirmante, data.rutFirmante, data.firmaFirmante, data.causaFirma)}
+    ${firmaBlock('Firmante del Documento', data.nombreFirmante, data.rutFirmante, data.firmaFirmante)}
   </tr>
 </table>
 
