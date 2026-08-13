@@ -111,10 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // ── Fecha por defecto (hoy) ───────────────────────────────────────────
-    const hoy = new Date().toISOString().split('T')[0];
-    const fechaEl = document.getElementById('fecha');
-    if (fechaEl) fechaEl.value = hoy;
+    // ── Fecha: se deja vacía hasta que el usuario la complete ──────────────
 
     // ── Organismo ─────────────────────────────────────────────────────────
     const GRUPOS_ORG = [
@@ -303,10 +300,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Resetear comunas
         document.getElementById('ciudad').innerHTML = '<option value="">Seleccione Comuna</option>';
 
-        // Fecha de hoy
-        const hoy2 = new Date().toISOString().split('T')[0];
+        // Fecha: se deja vacía hasta que el usuario la complete
         const fEl = document.getElementById('fecha');
-        if (fEl) fEl.value = hoy2;
+        if (fEl) fEl.value = '';
     };
 
     // ── Generar PDF ───────────────────────────────────────────────────────
