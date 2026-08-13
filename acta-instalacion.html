@@ -24,22 +24,22 @@
             font-size: 14px; font-weight: 500;
             transition: all .15s;
         }
-        .tipo-radio:hover { border-color: #cfe6ff; background: #fafcff; }
-        .tipo-radio input[type="radio"] { accent-color: var(--blue-mid); width: 15px; height: 15px; cursor: pointer; }
-        .tipo-radio:has(input:checked) { border-color: var(--blue-mid); background: var(--blue-light); color: var(--blue); font-weight: 600; }
+        .tipo-radio:hover { border-color: #a9d9f2; background: #f2f9fd; }
+        .tipo-radio input[type="radio"] { accent-color: #0096D6; width: 15px; height: 15px; cursor: pointer; }
+        .tipo-radio:has(input:checked) { border-color: #0096D6; background: #e6f4fb; color: #0096D6; font-weight: 600; }
 
         /* ── Tabla checklist ─────────────────────────────────────────── */
         .val-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-        .val-table thead tr { background: var(--blue-light); }
+        .val-table thead tr { background: #e6f4fb; }
         .val-table thead th {
             padding: 8px 10px; text-align: left;
             font-size: 13px; font-weight: 700;
-            color: var(--blue); text-transform: uppercase;
+            color: #0096D6; text-transform: uppercase;
             letter-spacing: .4px;
         }
         .val-table thead th.th-sino { text-align: center; width: 76px; }
-        .val-table tbody tr { border-bottom: 1px solid #f0f4f8; }
-        .val-table tbody tr:hover { background: #fafcff; }
+        .val-table tbody tr { border-bottom: 1px solid #cfeaf9; }
+        .val-table tbody tr:hover { background: #f2f9fd; }
         .val-table tbody td { padding: 7px 10px; font-size: 14px; vertical-align: middle; }
         .val-table tbody td.td-sino { text-align: center; }
 
@@ -55,10 +55,10 @@
             gap: 4px;
         }
         .sino-radio input[type="radio"] { display: none; }
-        .sino-radio.si-label { color: #1a9e5f; }
-        .sino-radio.no-label { color: #d93025; }
-        .sino-radio:has(input:checked).si-label { background: #e6f7ef; border-color: #1a9e5f; }
-        .sino-radio:has(input:checked).no-label { background: #fde8e8; border-color: #d93025; }
+        .sino-radio.si-label { color: #0096D6; }
+        .sino-radio.no-label { color: #0096D6; }
+        .sino-radio:has(input:checked).si-label { background: #e6f4fb; border-color: #0096D6; }
+        .sino-radio:has(input:checked).no-label { background: #e6f4fb; border-color: #0096D6; }
 
         /* ── Input IP ────────────────────────────────────────────────── */
         .ip-input {
@@ -71,27 +71,27 @@
             min-width: 0;
         }
         .ip-input:focus {
-            outline: none; border-color: var(--blue-mid);
-            box-shadow: 0 0 0 2px rgba(43,138,239,.12);
+            outline: none; border-color: #0096D6;
+            box-shadow: 0 0 0 2px rgba(0,150,214,.15);
         }
 
         /* ── Botón marcar todo Sí ────────────────────────────────────── */
         .marcar-si-btn {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 16px;
-            border: 1.5px solid #1a9e5f;
+            border: 1.5px solid #0096D6;
             border-radius: 8px;
-            background: #e6f7ef; color: #1a9e5f;
+            background: #e6f4fb; color: #0096D6;
             font-size: 13px; font-weight: 600;
             cursor: pointer; font-family: inherit;
             transition: all .14s;
             margin-bottom: 8px;
         }
-        .marcar-si-btn:hover { background: #1a9e5f; color: white; }
+        .marcar-si-btn:hover { background: #0096D6; color: white; }
         .marcar-si-btn--active {
-            background: #1a9e5f; color: white; border-color: #148a50;
+            background: #0096D6; color: white; border-color: #007ab8;
         }
-        .marcar-si-btn--active:hover { background: #148a50; }
+        .marcar-si-btn--active:hover { background: #007ab8; }
 
         /* ── Firmantes ───────────────────────────────────────────────── */
         .firmantes-grid {
@@ -101,17 +101,17 @@
             margin-top: 4px;
         }
         .firmante-block {
-            border: 1px solid #dde8f5;
+            border: 1px solid #a9d9f2;
             border-radius: var(--radius);
             padding: 16px;
             background: white;
         }
         .firmante-block h3 {
             font-size: 13px; font-weight: 700;
-            color: var(--blue); text-transform: uppercase;
+            color: #0096D6; text-transform: uppercase;
             letter-spacing: .5px; margin: 0 0 12px;
             padding-bottom: 8px;
-            border-bottom: 2px solid var(--blue-light);
+            border-bottom: 2px solid #e6f4fb;
         }
         .firmante-block .firma-container {
             height: 160px;
@@ -130,12 +130,12 @@
             align-items: center; gap: 6px;
             padding: 7px 16px;
             font-size: 13px; font-weight: 600;
-            color: #d93025; background: #fde8e8;
-            border: 1.5px solid #d93025;
+            color: #0096D6; background: #e6f4fb;
+            border: 1.5px solid #0096D6;
             border-radius: 8px; cursor: pointer;
             transition: background .14s, color .14s;
         }
-        .borrar-firma-btn:hover { background: #d93025; color: #fff; }
+        .borrar-firma-btn:hover { background: #0096D6; color: #fff; }
 
         @media (max-width: 700px) {
             .firmantes-grid { grid-template-columns: 1fr; }

@@ -14,8 +14,8 @@ function generarContenidoActaInstalacion(data) {
         return '';
     };
 
-    const HP  = '#0096D6';
-    const HPb = '#007ab8';
+    const HP  = '#5a5a5a';
+    const HPb = '#3d3d3d';
 
     const tbl  = 'width:100%;border-collapse:collapse;font-size:11.5px;';
     const thS  = `padding:5px 8px;background:${HP};color:#fff;font-weight:700;font-size:11px;border:1px solid ${HPb};text-align:center;`;

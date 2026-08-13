@@ -1,24 +1,24 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    --blue: #1560BD;
-    --blue-light: #e8f0fd;
-    --blue-mid: #2b8aef;
-    --green: #1a9e5f;
-    --green-light: #e6f7ef;
+    --blue: #0096D6;
+    --blue-light: #e6f4fb;
+    --blue-mid: #007ab8;
+    --green: #1a9c5c;
+    --green-light: #e3f7ec;
     --red: #d93025;
-    --red-light: #fff0ef;
+    --red-light: #fdeceb;
     --gray-50: #f7f9fc;
-    --gray-100: #edf1f7;
-    --gray-200: #dde4ef;
-    --gray-400: #9aabbc;
-    --gray-600: #5a6a7a;
+    --gray-100: #e6f4fb;
+    --gray-200: #cfeaf9;
+    --gray-400: #5fb8e0;
+    --gray-600: #0096D6;
     --gray-800: #1e2d3d;
-    --border: #d5dfe9;
+    --border: #cccccc;
     --radius: 14px;
     --radius-sm: 8px;
-    --shadow: 0 2px 12px rgba(21,96,189,0.08);
-    --shadow-lg: 0 8px 32px rgba(21,96,189,0.13);
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.13);
     --font: 'IBM Plex Sans', system-ui, sans-serif;
 }
 
@@ -33,13 +33,13 @@ html, body {
 
 /* ===== HEADER ===== */
 .app-header {
-    background: var(--blue);
+    background: #0096D6;
     color: #fff;
     padding: 18px 32px;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 16px rgba(21,96,189,0.3);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.3);
 }
 
 .header-inner {
@@ -97,7 +97,7 @@ html, body {
     color: var(--gray-800);
     margin-bottom: 20px;
     padding-bottom: 12px;
-    border-bottom: 2px solid var(--blue-light);
+    border-bottom: 2px solid #e6f4fb;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -106,7 +106,7 @@ html, body {
 .section-icon {
     width: 30px;
     height: 30px;
-    background: var(--blue-light);
+    background: #e6f4fb;
     border-radius: 8px;
     display: inline-flex;
     align-items: center;
@@ -172,9 +172,9 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    border-color: var(--blue-mid);
+    border-color: #0096D6;
     background: white;
-    box-shadow: 0 0 0 3px rgba(43,138,239,0.1);
+    box-shadow: 0 0 0 3px rgba(0,150,214,0.12);
 }
 
 input::placeholder,
@@ -237,8 +237,8 @@ textarea::placeholder { color: var(--gray-400); }
 }
 
 .checklist label:hover {
-    border-color: #cfe6ff;
-    background: #fafcff;
+    border-color: #a9d9f2;
+    background: #f2f9fd;
 }
 
 .checklist input[type="checkbox"] {
@@ -271,8 +271,8 @@ textarea::placeholder { color: var(--gray-400); }
 }
 
 .checklist input[type="checkbox"]:checked + .check-label-text::before {
-    background: var(--blue-mid);
-    border-color: var(--blue-mid);
+    background: #0096D6;
+    border-color: #0096D6;
 }
 
 /* Checkmark tick */
@@ -287,8 +287,8 @@ textarea::placeholder { color: var(--gray-400); }
 }
 
 .checklist label:has(input:checked) {
-    border-color: #cfe6ff;
-    background: #f0f7ff;
+    border-color: #a9d9f2;
+    background: #f2f9fd;
 }
 
 /* ===== CHECK COUNTER ===== */
@@ -302,8 +302,8 @@ textarea::placeholder { color: var(--gray-400); }
     margin-bottom: 10px;
 }
 .count-badge {
-    background: var(--blue-light);
-    color: var(--blue);
+    background: #e6f4fb;
+    color: #0096D6;
     padding: 2px 9px;
     border-radius: 20px;
     font-weight: 700;
@@ -316,10 +316,10 @@ textarea::placeholder { color: var(--gray-400); }
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    border: 1.5px dashed var(--border);
+    border: 1.5px dashed #5fb8e0;
     border-radius: var(--radius-sm);
     background: transparent;
-    color: var(--blue-mid);
+    color: #0096D6;
     font-family: var(--font);
     font-size: 14px;
     font-weight: 600;
@@ -327,8 +327,8 @@ textarea::placeholder { color: var(--gray-400); }
     transition: all .15s ease;
 }
 .btn.select-all-global:not(:disabled):hover {
-    background: var(--blue-light);
-    border-color: var(--blue-mid);
+    background: #e6f4fb;
+    border-color: #0096D6;
 }
 .btn.select-all-global:disabled { opacity: 0.45; cursor: default; }
 
@@ -345,12 +345,12 @@ textarea {
 /* ===== SERIES PILLS ===== */
 .series-pill {
     display: inline-block;
-    background: var(--blue-light);
+    background: #e6f4fb;
     border-radius: 6px;
     padding: 3px 9px;
     font-size: 13px;
     font-weight: 700;
-    color: var(--blue);
+    color: #0096D6;
     letter-spacing: 0.4px;
     margin-bottom: 6px;
 }
@@ -407,15 +407,15 @@ textarea {
 }
 
 .btn-limpiar {
-    background: var(--gray-100);
-    color: var(--gray-600);
+    background: #e6f4fb;
+    color: #0096D6;
 }
-.btn-limpiar:hover { background: var(--gray-200); }
+.btn-limpiar:hover { background: #cfeaf9; }
 
 .btn-confirmar {
-    background: var(--blue);
+    background: #0096D6;
     color: white;
-    box-shadow: 0 4px 12px rgba(21,96,189,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 .btn-confirmar:hover { filter: brightness(1.08); }
 
@@ -424,9 +424,9 @@ textarea {
     align-items: center;
     gap: 8px;
     padding: 10px 14px;
-    background: var(--green-light);
+    background: #e6f4fb;
     border-radius: var(--radius-sm);
-    color: var(--green);
+    color: #0096D6;
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 20px;
@@ -439,7 +439,7 @@ textarea {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--green);
+    background: #0096D6;
     color: white;
     border: none;
     border-radius: var(--radius-sm);
@@ -448,7 +448,7 @@ textarea {
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(26,158,95,0.28);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.28);
     transition: all .15s;
     letter-spacing: -0.2px;
 }
@@ -491,8 +491,8 @@ textarea {
     align-items: center;
     gap: 8px;
     background: white;
-    color: var(--blue);
-    border: 2px solid var(--blue);
+    color: #0096D6;
+    border: 2px solid #0096D6;
     border-radius: var(--radius-sm);
     padding: 12px 28px;
     font-family: var(--font);
@@ -503,7 +503,7 @@ textarea {
     letter-spacing: -0.2px;
 }
 .nueva-acta-btn:hover {
-    background: var(--blue-light);
+    background: #e6f4fb;
     transform: translateY(-1px);
 }
 .nueva-acta-btn:active { transform: scale(0.98); }
