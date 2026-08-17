@@ -335,11 +335,14 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/\s+/g, ' ')
             .trim();
 
-        const partes = ['Acta Registro de Instalacion'];
+        const partes = [];
         const organismo = limpiar(data.organismo);
         if (organismo) partes.push(organismo);
         const serie = limpiar(data.serie);
         if (serie) partes.push(serie);
+
+        // Si no hay organismo ni serie ingresados, usar un nombre por defecto
+        if (!partes.length) partes.push('Registro de Instalacion');
 
         return partes.join(' - ') + '.pdf';
     }
