@@ -305,6 +305,45 @@ document.addEventListener('DOMContentLoaded', () => {
         if (fEl) fEl.value = '';
     };
 
+    // ── Esperar a que todas las imágenes (firmas, logo) estén cargadas ────
+    // Esto es clave para que las firmas dibujadas (imágenes base64) queden
+    // reflejadas en el PDF: html2canvas debe capturar el DOM únicamente
+    // cuando todas las <img> ya terminaron de decodificarse.
+    async function esperarImagenesCargadas(container) {
+        const imgs = Array.from(container.querySelectorAll('img'));
+        await Promise.all(imgs.map(img => {
+            if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+            return new Promise(resolve => {
+                const finalizar = () => resolve();
+                img.addEventListener('load',  finalizar, { once: true });
+                img.addEventListener('error', finalizar, { once: true });
+                if (img.decode) {
+                    img.decode().then(finalizar).catch(() => {});
+                }
+            });
+        }));
+        // Pequeño margen para que el navegador termine de pintar el frame
+        await new Promise(resolve => setTimeout(resolve, 150));
+    }
+
+    // ── Construir nombre de archivo de descarga ────────────────────────────
+    function construirNombreArchivo(data) {
+        const limpiar = str => String(str || '')
+            .trim()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // quitar tildes
+            .replace(/[\\/:*?"<>|]/g, '')                       // caracteres inválidos en nombre de archivo
+            .replace(/\s+/g, ' ')
+            .trim();
+
+        const partes = ['Acta Registro de Instalacion'];
+        const organismo = limpiar(data.organismo);
+        if (organismo) partes.push(organismo);
+        const serie = limpiar(data.serie);
+        if (serie) partes.push(serie);
+
+        return partes.join(' - ') + '.pdf';
+    }
+
     // ── Generar PDF ───────────────────────────────────────────────────────
     window.generarPDF = async function () {
 
@@ -360,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const html     = generarContenidoActaInstalacion(data);
-        const filename = 'Registro-Instalacion.pdf';
+        const filename = construirNombreArchivo(data);
 
         // 1. Mostrar overlay PRIMERO y esperar que el navegador lo pinte
         const overlay = document.getElementById('pdfOverlay');
@@ -373,14 +412,18 @@ document.addEventListener('DOMContentLoaded', () => {
         tempDiv.style.cssText = 'width:794px;background:#fff;padding:20px;position:fixed;top:10px;left:-10000px;z-index:9999;opacity:1;visibility:visible;';
         document.body.appendChild(tempDiv);
 
-        // 3. Pequeña espera para que el DOM estabilice antes de capturar
-        await new Promise(resolve => setTimeout(resolve, 800));
+        // 3. Esperar a que TODAS las imágenes (firmas dibujadas y logo) estén
+        //    completamente cargadas/decodificadas antes de capturar. Esto es
+        //    lo que garantiza que la firma digital quede reflejada en el PDF.
+        await esperarImagenesCargadas(tempDiv);
 
         try {
             const canvas = await html2canvas(tempDiv, {
                 scale:           2,
                 backgroundColor: '#ffffff',
                 useCORS:         true,
+                allowTaint:      true,
+                imageTimeout:    15000,
                 logging:         false,
             });
             const imgData = canvas.toDataURL('image/png');
